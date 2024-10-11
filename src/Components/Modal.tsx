@@ -1,5 +1,5 @@
 import { useCart } from "@/Contexts/ShoppingCartContext";
-import { ButtonQuantity } from "./ButtonQuantity";
+import { CardCart } from "./CardCart";
 
 type Props = {
   onClose: () => void; // Função que será chamada para fechar o modal
@@ -14,30 +14,30 @@ export const Modal = ({ onClose }: Props) => {
     : "0.00";
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed h-screen inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="w-96 relative bg-black border border-white/30 rounded-lg">
-        <h1 className="text-white text-2xl p-4 font-bold rounded-md">Deseja finalizar a compra?</h1>
+        <h1 className="text-white text-xl p-4 font-bold rounded-md mt-10">Deseja finalizar a compra?</h1>
         
         {/* Mostra os itens do carrinho */}
         {cartCtx?.cart.map((item) => (
           <div key={item.id} className="border-b border-white/30 flex gap-4 p-4">
-            <img src={item.image} alt={item.name} className="h-14 w-14" />
-            <div className="flex-1">
-              <div className="">{item.name}</div>
-              <div className="text-sm ">
-                {item.quantity}X R$ {(item.price * item.quantity).toFixed(2)}
-              </div>
-             
-            </div>
-            <ButtonQuantity
-              quantity={item.quantity}
-              id={item.id}/>
-          </div>
+            <CardCart
+            id={item.id}
+            price={item.price}
+            name={item.name}
+            quantity={item.quantity}
+            image={item.image}/>
+         </div>
         ))}
 
         {/* Mostra o total calculado */}
-        <div className="text-white p-4">Total: R${Total}</div>
-
+        <div className="text-white p-4 flex text-lg">
+          <span className="flex-1">Total:</span>
+          <span>R$ {Total}</span>
+        </div>
+       <div className="w-full flex justify-center m-4">
+        <button className="bg-blue-500 w-56 py-3 px-4 rounded-lg">FINALIZAR</button>
+       </div>
         {/* Botão para fechar o modal */}
         <button onClick={onClose} className="text-white  bg-red-500 p-2 rounded-full h-8 w-8 absolute top-2 right-2 flex items-center justify-center">X
         </button>
